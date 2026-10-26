@@ -1,218 +1,384 @@
-/* ==========================================================================
-   Własne Zmienne CSS (Custom Properties / Motywy)
-   ========================================================================== */
-:root[data-theme="dark"] {
-  --bg-primary: #0a0e17;
-  --bg-card: #121824;
-  --bg-hover: #1b2436;
-  --text-main: #f8fafc;
+:root {
+  --bg-color: #0d0f12;
+  --card-bg: #161920;
+  --text-color: #e2e8f0;
   --text-muted: #94a3b8;
-  --border-color: #1e293b;
-  --accent: #2563eb;
-  --accent-hover: #3b82f6;
-  --accent-glow: rgba(37, 99, 235, 0.25);
+  --primary-color: #0070f3;
+  --primary-hover: #0051bb;
+  --valorant-red: #ff4655;
+  --border-color: #262b36;
+  --focus-ring: #38bdf8;
 }
 
-:root[data-theme="light"] {
-  --bg-primary: #f8fafc;
-  --bg-card: #ffffff;
-  --bg-hover: #f1f5f9;
-  --text-main: #0f172a;
-  --text-muted: #64748b;
-  --border-color: #e2e8f0;
-  --accent: #2563eb;
-  --accent-hover: #1d4ed8;
-  --accent-glow: rgba(37, 99, 235, 0.15);
-}
-
-/* ==========================================================================
-   Reset & Podstawowe Stylizowanie
-   ========================================================================== */
-* {
+*, *::before, *::after {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background-color: var(--bg-primary);
-  color: var(--text-main);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
   line-height: 1.6;
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* ==========================================================================
-   Przełącznik Motywu (Theme Toggle Button)
-   ========================================================================== */
-.theme-toggle-container {
-  position: fixed;
-  top: 24px;
-  right: 24px;
-  z-index: 100;
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 4vw, 40px);
 }
 
-.theme-toggle-btn {
-  background: var(--bg-card);
+a:focus-visible, button:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+header {
+  border-bottom: 1px solid var(--border-color);
+  padding: clamp(12px, 2vh, 20px) 0;
+  position: sticky;
+  top: 0;
+  background-color: rgba(13, 15, 18, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 1000;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 3vw, 30px);
+}
+
+.logo {
+  font-weight: 800;
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  letter-spacing: 1.5px;
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+nav {
+  display: flex;
+  gap: clamp(12px, 2.5vw, 24px);
+  flex-wrap: wrap;
+}
+
+nav a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: clamp(0.85rem, 1.2vw, 1rem);
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+nav a:hover {
+  color: var(--text-color);
+}
+
+.lang-btn {
+  background-color: var(--card-bg);
   border: 1px solid var(--border-color);
-  color: var(--text-main);
-  padding: 10px 16px;
-  border-radius: 30px;
+  color: var(--text-muted);
+  padding: 6px 14px;
+  border-radius: 20px;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+  user-select: none;
 }
 
-.theme-toggle-btn:hover {
-  border-color: var(--accent);
+.lang-btn:hover {
+  border-color: var(--text-muted);
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
-/* ==========================================================================
-   Główny Layout i Karta (Card Component)
-   ========================================================================== */
-.wrapper {
-  max-width: 680px;
-  width: 100%;
-  margin: 40px auto;
+.lang-option {
+  transition: color 0.2s ease;
 }
 
-.card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 24px;
-  padding: 40px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+.lang-option.active {
+  color: var(--primary-color);
 }
 
-/* Profil & Nagłówek */
-.profile-header {
+.lang-divider {
+  opacity: 0.4;
+  font-weight: 400;
+}
+
+.hero {
+  padding: clamp(50px, 10vh, 120px) 0 clamp(40px, 6vh, 80px);
   text-align: center;
+}
+
+.hero h1 {
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 12px;
+}
+
+.highlight {
+  color: var(--primary-color);
+  background: linear-gradient(135deg, #0070f3, #38bdf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+  font-size: clamp(1rem, 2vw, 1.35rem);
+  color: var(--text-muted);
   margin-bottom: 32px;
 }
 
-.avatar-wrapper {
-  width: 108px;
-  height: 108px;
-  margin: 0 auto 20px;
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
-.avatar {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent), #1d4ed8);
-  display: flex;
+.btn {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: #ffffff;
-  box-shadow: 0 0 25px var(--accent-glow);
-}
-
-h1 {
-  font-size: 2.2rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  margin-bottom: 6px;
-}
-
-.badge {
-  display: inline-block;
-  background: var(--accent-glow);
-  color: var(--accent);
-  border: 1px solid var(--accent);
-  font-size: 0.85rem;
+  padding: clamp(10px, 1.5vh, 14px) clamp(20px, 3vw, 32px);
+  border-radius: 10px;
+  text-decoration: none;
   font-weight: 600;
-  padding: 4px 14px;
-  border-radius: 20px;
-  margin-bottom: 16px;
+  font-size: clamp(0.9rem, 1.1vw, 1rem);
+  transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+  will-change: transform;
 }
 
-.bio {
-  color: var(--text-muted);
-  font-size: 1.05rem;
-  max-width: 520px;
-  margin: 0 auto;
+.btn:hover {
+  transform: translateY(-2px);
 }
 
-/* ==========================================================================
-   Sekcje & Elementy Komponentów
-   ========================================================================== */
-.section {
-  margin-top: 32px;
+.btn:active {
+  transform: translateY(0);
 }
 
-.section-title {
-  font-size: 1.1rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--accent);
-  margin-bottom: 16px;
+.btn-primary {
+  background-color: var(--primary-color);
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(0, 112, 243, 0.3);
 }
 
-/* Tagi umiejętności */
-.skills-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+.btn-primary:hover {
+  background-color: var(--primary-hover);
 }
 
-.skill-tag {
-  background: var(--bg-hover);
+.btn-secondary {
+  background-color: var(--card-bg);
+  color: var(--text-color);
   border: 1px solid var(--border-color);
-  color: var(--text-main);
-  padding: 6px 14px;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  font-weight: 500;
 }
 
-/* Kafelki z Linkami */
-.links-container {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+.btn-secondary:hover {
+  border-color: var(--text-muted);
 }
 
-.link-card {
+.section {
+  padding: clamp(40px, 7vh, 75px) 0;
+  border-top: 1px solid var(--border-color);
+}
+
+.section h2 {
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.section-desc {
+  color: var(--text-muted);
+  margin-bottom: 28px;
+  font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+}
+
+.about-text {
+  font-size: clamp(1rem, 1.3vw, 1.15rem);
+  color: var(--text-muted);
+  max-width: 850px;
+}
+
+.about-text strong {
+  color: var(--text-color);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: clamp(16px, 2.5vw, 24px);
+}
+
+.stat-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  padding: clamp(24px, 4vw, 36px);
+  border-radius: 14px;
+  text-align: center;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+}
+
+.highlight-card {
+  border-color: rgba(0, 112, 243, 0.4);
+  background: linear-gradient(180deg, var(--card-bg) 0%, rgba(0, 112, 243, 0.05) 100%);
+}
+
+.stat-number {
+  font-size: clamp(2.8rem, 6vw, 3.8rem);
+  font-weight: 800;
+  color: var(--primary-color);
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.stat-title {
+  font-weight: 600;
+  font-size: clamp(1rem, 1.3vw, 1.15rem);
+}
+
+.stat-desc {
+  font-size: clamp(0.8rem, 1vw, 0.9rem);
+  color: var(--text-muted);
+  margin-top: 6px;
+}
+
+.gaming-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-left: 5px solid var(--valorant-red);
+  padding: clamp(20px, 4vw, 36px);
+  border-radius: 12px;
+}
+
+.gaming-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  background: var(--bg-hover);
-  border: 1px solid var(--border-color);
-  color: var(--text-main);
+  gap: 14px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.game-badge {
+  background-color: var(--valorant-red);
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 4px;
+  letter-spacing: 1.2px;
+}
+
+.gaming-header h3 {
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+}
+
+.gaming-desc {
+  color: var(--text-muted);
+  font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+}
+
+.rank-box {
+  margin: 20px 0;
+  padding: 10px 18px;
+  background-color: rgba(255, 70, 85, 0.08);
+  border: 1px solid rgba(255, 70, 85, 0.25);
+  display: inline-flex;
+  align-items: center;
+  border-radius: 8px;
+}
+
+.rank-label {
+  color: var(--text-muted);
+  margin-right: 8px;
+  font-size: clamp(0.85rem, 1vw, 0.95rem);
+}
+
+.rank-value {
+  font-weight: 700;
+  color: var(--valorant-red);
+  font-size: clamp(1rem, 1.3vw, 1.2rem);
+}
+
+.gaming-footer-text {
+  color: var(--text-muted);
+  font-size: clamp(0.9rem, 1.1vw, 1rem);
+}
+
+footer {
+  padding: clamp(30px, 5vh, 50px) 0;
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+  color: var(--text-muted);
+  font-size: clamp(0.85rem, 1vw, 0.95rem);
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+footer a {
+  color: var(--primary-color);
   text-decoration: none;
-  padding: 16px 20px;
-  border-radius: 14px;
   font-weight: 600;
 }
 
-.link-card:hover {
-  border-color: var(--accent);
-  background: var(--accent);
-  color: #ffffff;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px var(--accent-glow);
+footer a:hover {
+  text-decoration: underline;
 }
 
-/* ==========================================================================
-   Stopka (Footer)
-   ========================================================================== */
-footer {
-  text-align: center;
-  margin-top: 32px;
-  color: var(--text-muted);
-  font-size: 0.85rem;
+@media (max-width: 600px) {
+  .header-content {
+    justify-content: center;
+    text-align: center;
+  }
+  .header-right {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .hero-buttons {
+    width: 100%;
+    flex-direction: column;
+  }
+  .btn {
+    width: 100%;
+  }
+}
+
+@media (min-width: 2200px) {
+  .container {
+    max-width: 1600px;
+  }
 }
