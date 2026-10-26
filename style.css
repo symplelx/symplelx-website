@@ -335,6 +335,18 @@ nav a:hover {
   font-size: clamp(0.9rem, 1.1vw, 1rem);
 }
 
+.agents-block {
+  margin-top: 6px;
+}
+.agents-list {
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
 footer {
   padding: clamp(30px, 5vh, 50px) 0;
   border-top: 1px solid var(--border-color);
