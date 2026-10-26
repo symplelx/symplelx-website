@@ -1,35 +1,59 @@
-/**
- * Obsługa dynamicznej zmiany motywu (Dark / Light Mode)
- * Zapamiętuje preference użytkownika w localStorage
- */
-document.addEventListener('DOMContentLoaded', () => {
-  const themeToggleBtn = document.getElementById('themeToggle');
-  const themeIcon = document.getElementById('themeIcon');
-  const themeText = document.getElementById('themeText');
+// --- OBSŁUGA MOTYWU (DARK / LIGHT) ---
+// Jeśli chcesz dodać przycisk motywu w HTML, wystarczy ID 'theme-toggle'
+const themeToggleBtn = document.getElementById('theme-toggle');
+let currentTheme = localStorage.getItem('user_theme') || 'dark';
 
-  // Pobranie zachowanego motywu lub domyślny 'dark'
-  const savedTheme = localStorage.getItem('theme') || 'dark';
-  document.documentElement.setAttribute('data-theme', savedTheme);
-  updateToggleUI(savedTheme);
-
-  // Zdarzenie kliknięcia przełącznika
-  themeToggleBtn.addEventListener('click', () => {
-    const currentTheme = document.documentElement.getAttribute('data-theme');
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
-    document.documentElement.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
-    updateToggleUI(newTheme);
-  });
-
-  // Aktualizacja ikony oraz tekstu na przycisku
-  function updateToggleUI(theme) {
-    if (theme === 'dark') {
-      themeIcon.textContent = '🌙';
-      themeText.textContent = 'Ciemny';
-    } else {
-      themeIcon.textContent = '☀️';
-      themeText.textContent = 'Jasny';
-    }
+function setTheme(theme) {
+  currentTheme = theme;
+  localStorage.setItem('user_theme', theme);
+  
+  if (theme === 'light') {
+    document.documentElement.setAttribute('data-theme', 'light');
+  } else {
+    document.documentElement.removeAttribute('data-theme');
   }
-});
+}
+
+if (themeToggleBtn) {
+  themeToggleBtn.addEventListener('click', () => {
+    setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+  });
+}
+setTheme(currentTheme);
+
+
+// --- OBSŁUGA JĘZYKA (PL / EN) ---
+const langToggleBtn = document.getElementById('lang-toggle');
+const langPlSpan = document.getElementById('lang-pl');
+const langEnSpan = document.getElementById('lang-en');
+
+let currentLang = localStorage.getItem('user_lang') || 'pl';
+
+function setLanguage(lang) {
+  currentLang = lang;
+  localStorage.setItem('user_lang', lang);
+  document.documentElement.lang = lang;
+
+  if (lang === 'en') {
+    if (langPlSpan) langPlSpan.classList.remove('active');
+    if (langEnSpan) langEnSpan.classList.add('active');
+  } else {
+    if (langEnSpan) langEnSpan.classList.remove('active');
+    if (langPlSpan) langPlSpan.classList.add('active');
+  }
+
+  document.querySelectorAll('[data-pl][data-en]').forEach(el => {
+    const text = el.getAttribute(`data-${lang}`);
+    if (text) {
+      el.innerHTML = text;
+    }
+  });
+}
+
+if (langToggleBtn) {
+  langToggleBtn.addEventListener('click', () => {
+    setLanguage(currentLang === 'pl' ? 'en' : 'pl');
+  });
+}
+
+setLanguage(currentLang);
