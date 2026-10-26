@@ -13,7 +13,6 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Status-Active-success?style=for-the-badge" alt="Status">
-  <img src="https://img.shields.io/badge/Tech-HTML5%20%C%20CSS3%20%C%20JS-blue?style=for-the-badge" alt="Tech Stack">
   <img src="https://img.shields.io/badge/Vocational%20Exam-100%25%20Practical-blueviolet?style=for-the-badge" alt="Exam Score">
   <img src="https://img.shields.io/badge/Valorant-Immortal%201-ff4655?style=for-the-badge" alt="Valorant Peak">
 </p>
