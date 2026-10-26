@@ -27,3 +27,4 @@ Official personal website and portfolio for **symplelx**, built with clean, mode
 ├── style.css           # Modular stylesheet with dynamic theme variables
 ├── script.js           # Vanilla JS for theme state management & UI toggling
 └── CNAME               # Custom domain pointer (symplelx.pl)
+ 
