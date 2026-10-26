@@ -1,5 +1,4 @@
 // --- OBSŁUGA MOTYWU (DARK / LIGHT) ---
-// Jeśli chcesz dodać przycisk motywu w HTML, wystarczy ID 'theme-toggle'
 const themeToggleBtn = document.getElementById('theme-toggle');
 let currentTheme = localStorage.getItem('user_theme') || 'dark';
 
